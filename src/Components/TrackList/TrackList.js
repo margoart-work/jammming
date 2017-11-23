@@ -7,6 +7,9 @@ class TrackList extends React.Component {
         return (
             <div className="TrackList">
                 <!-- You will add a map method that renders a set of Track components  -->
+                first track
+                second track
+                third track
             </div>
         );
     }

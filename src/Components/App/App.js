@@ -6,6 +6,12 @@ import Playlist from './Components/Playlist/Playlist';
 
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchResults: [name,artist,album]
+        };
+    }
   render() {
     return (
         <div>
