@@ -1,15 +1,27 @@
 import React from 'react';
 import './App.css';
-import SearchBar from './Components/SearchBar/SearchBar';
-import SearchResults from './Components/SearchResults/SearchResults';
-import Playlist from './Components/Playlist/Playlist';
+import SearchBar from '../SearchBar/SearchBar';
+import SearchResults from '../SearchResults/SearchResults';
+import Playlist from '../Playlist/Playlist';
 
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchResults: [name,artist,album]
+            searchResults: [{
+                name: 'Tiny Dancer',
+                artist: 'Elton John',
+                album: 'Madman across the water'
+            },{
+                name: 'Shape of you',
+                artist: 'Ed Sheeran',
+                album: 'Shape of you'
+            },{
+                name: 'The Greatest',
+                artist: 'Sia',
+                album: 'This is acting'
+            }]
         };
     }
   render() {
@@ -19,7 +31,7 @@ class App extends React.Component {
             <div className="App">
                 <SearchBar />
                 <div className="App-playlist">
-                    <SearchResults />
+                    <SearchResults searchResults={this.state.searchResults}/>
                     <Playlist />
                 </div>
             </div>
