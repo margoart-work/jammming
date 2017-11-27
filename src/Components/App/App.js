@@ -49,7 +49,7 @@ class App extends React.Component {
             });
         }
     }
-
+   //??
     removeTrack(track) {
         if (this.state.playlistTracks.name === track.id) {
             this.setState.playlistTracks({
@@ -74,8 +74,9 @@ class App extends React.Component {
     )
     }
 
+
     search(searchTerm) {
-        console.log(searchTermterm);
+        console.log(searchTerm);
     }
 
     render() {
