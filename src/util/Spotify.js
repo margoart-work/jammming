@@ -61,7 +61,12 @@ const Spotify = {
             let userId;
             return fetch('https://api.spotify.com/v1/me', {headers: headers}).then(response => {
                 return response.json();
-            }).then()
+            }).then(jsonResponse => {
+                if (jsonResponse.id){
+                    userId = jsonResponse.id;
+                    return userId;
+                }
+            });
         }
 
     }

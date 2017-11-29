@@ -67,7 +67,12 @@ var Spotify = {
             var userId = void 0;
             return fetch('https://api.spotify.com/v1/me', { headers: headers }).then(function (response) {
                 return response.json();
-            }).then();
+            }).then(function (jsonResponse) {
+                if (jsonResponse.id) {
+                    userId = jsonResponse.id;
+                    return userId;
+                }
+            });
         }
     }
 };
