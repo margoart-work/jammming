@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
+import Spotify from '../../util/Spotify';
 
 
 class App extends React.Component {
@@ -73,10 +74,14 @@ class App extends React.Component {
         }
     )
     }
+    /* update the .savePlaylist() method to call Spotify.savePlaylist().
+After you call Spotify.savePlaylist(), 
+reset the state of playlistName to 'New Playlist' and searchResults to an empty array.
+*/
 
 
     search(searchTerm) {
-        console.log(searchTerm);
+        Spotify.search(searchTerm).then(tracks => this.setState({searchResults: tracks}))
     }
 
     render() {

@@ -6,19 +6,69 @@ Object.defineProperty(exports, "__esModule", {
 //you will register a Spotify application and create a method called getAccessToken in the Spotify module.
 // The method will get a user's access token so that they can make requests to the Spotify API.
 
-var accessToken = '';
+var accessToken = void 0;
 var client_id = '1061154da1164bbc9b258f51a6642468';
-var client_secret = '6eb4cdffe861447fb033ece93e67a3ef';
-var reirect_uri = 'http://localhost:3000/';
+var redirect_uri = 'http://localhost:3000/';
 
 //Create a Spotify Module
 var Spotify = {
     getAccessToken: function getAccessToken() {
         if (accessToken) {
-            return new Promise(function (resolve) {
-                return resolve(accessToken);
+            return accessToken;
+        }
+        var newAccessToken = window.location.href.match(/access_token=([^&]*)/);
+        var newExpiresIn = window.location.href.match(/expires_in=([^&]*)/);
+        if (newAccessToken && newExpiresIn) {
+            accessToken = newAccessToken[1];
+            var expiresIn = Number(newExpiresIn[1]);
+            //Clear the parameters from the URL, so the app doesn't try grabbing the access token after it has expired
+            window.setTimeout(function () {
+                return accessToken = '';
+            }, expiresIn * 1000);
+            window.history.pushState('Access Token', null, '/');
+            return accessToken;
+        } else {
+            var accessUrl = 'https://accounts.spotify.com/authorize?client_id=' + client_id + '&response_type=token&scope=playlist-modify-public&show_dialog=true&redirect_uri=' + redirect_uri;
+            window.location = accessUrl;
+        }
+    },
+    search: function search(searchTerm) {
+        return Spotify.getAccessToken().then(function () {
+            return fetch('https://cors-anywhere.herokuapp.com/' + ('https://api.spotify.com/v1/search?type=track&q=' + searchTerm), {
+                headers: { Authorization: 'Bearer ' + accessToken }
             });
-        } else {}
+        }).then(function (response) {
+            return response.json();
+        }).then(function (jsonResponse) {
+            if (jsonResponse.tracks) {
+                return jsonResponse.tracks.map(function (track) {
+                    return {
+                        id: track.id,
+                        name: track.name,
+                        artist: track.artists[0].name,
+                        album: track.album.name,
+                        uri: track.uri
+                    };
+                });
+            } else {
+                //return empty array
+                return [];
+            }
+        });
+    },
+    savePlaylist: function savePlaylist(playlistName, trackURIs) {
+        if (playlistName && trackURIs) {
+            var _accessToken = Spotify.getAccessToken();
+            var headers = {
+                headers: {
+                    'Authorization': 'Bearer ' + _accessToken
+                }
+            };
+            var userId = void 0;
+            return fetch('https://api.spotify.com/v1/me', { headers: headers }).then(function (response) {
+                return response.json();
+            }).then();
+        }
     }
 };
 
