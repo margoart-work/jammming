@@ -67,15 +67,16 @@ class App extends React.Component {
 
     //Create a Method that Saves the Playlist to a User's Account ??
     savePlaylist() {
-        let trackURIs = this.state.playlistTracks.map(?
+        alert("dsdadad");
+        /*let trackURIs = this.state.playlistTracks.map(?
     =>
         {
 //??
         }
-    )
+    )*/
     }
     /* update the .savePlaylist() method to call Spotify.savePlaylist().
-After you call Spotify.savePlaylist(), 
+After you call Spotify.savePlaylist(),
 reset the state of playlistName to 'New Playlist' and searchResults to an empty array.
 */
 
@@ -94,7 +95,7 @@ reset the state of playlistName to 'New Playlist' and searchResults to an empty 
                         <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack}
                                        onRemove={this.removeTrack}/>
                         <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks}
-                                  onNameChange={this.updatePlaylistName} onSave={this.savePlaylist()}/>
+                                  onNameChange={this.updatePlaylistName} onSave={this.savePlaylist}/>
                     </div>
                 </div>
             </div>
