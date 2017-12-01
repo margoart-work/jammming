@@ -69,7 +69,7 @@ class App extends React.Component {
     //Create a Method that Saves the Playlist to a User's Account
     savePlaylist() {
         //Generates an array of uri values called trackURIs from the playlistTracks property.
-        //let trackURIs =
+        let trackURIs = Array.from(this.state.playlistTracks.uri);
         Spotify.savePlaylist();
     }
 
@@ -91,7 +91,7 @@ reset the state of playlistName to 'New Playlist' and searchResults to an empty 
                     <div className="App-playlist">
                         <SearchResults searchResults={this.state.searchResults}
                                        onAdd={this.addTrack} onRemove={this.removeTrack}/>
-                        <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks}
+                        <Playlist playlistTracks={this.state.playlistTracks}
                                   onAdd={this.addTrack} onRemove={this.removeTrack}
                                   onNameChange={this.updatePlaylistName} onSave={this.savePlaylist}/>
                     </div>
