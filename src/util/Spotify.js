@@ -23,11 +23,9 @@ const Spotify = {
         }
     },
     search(searchTerm) {
-        return Spotify.getAccessToken().then(() => {
                 return fetch('https://cors-anywhere.herokuapp.com/' + `https://api.spotify.com/v1/search?type=track&q=${searchTerm}`, {
                     headers: {Authorization: `Bearer ${accessToken}`}
-                });
-            }
+                }
         ).then(response => {
             return response.json();
         }).then(jsonResponse => {
