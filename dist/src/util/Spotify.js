@@ -30,8 +30,6 @@ var Spotify = {
         }
     },
     search: function search(searchTerm) {
-        // Spotify.getAccessToken();
-
         return fetch('https://cors-anywhere.herokuapp.com/' + ('https://api.spotify.com/v1/search?type=track&q=' + searchTerm + '&limit=10'), {
             headers: { Authorization: 'Bearer ' + accessToken }
         }).then(function (response) {
@@ -54,23 +52,42 @@ var Spotify = {
         });
     },
     savePlaylist: function savePlaylist(playlistName, trackURIs) {
-        if (playlistName && trackURIs) {
-            var _accessToken = Spotify.getAccessToken();
-            var headers = {
-                headers: {
-                    'Authorization': 'Bearer ' + _accessToken
-                }
-            };
-            var userId = void 0;
-            return fetch('https://api.spotify.com/v1/me', { headers: headers }).then(function (response) {
+        if (!(playlistName && trackURIs)) {
+            return;
+        }
+
+        var headers = {
+            'Authorization': 'Bearer ' + accessToken
+        };
+        var userId = void 0;
+        fetch('https://cors-anywhere.herokuapp.com/' + 'https://api.spotify.com/v1/me', { headers: headers }).then(function (response) {
+            return response.json();
+        }).then(function (jsonResponse) {
+            if (!jsonResponse.id) {
+                return;
+            }
+
+            userId = jsonResponse.id;
+            fetch('https://api.spotify.com/v1/users/' + userId + '/playlists', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({ name: playlistName })
+            }).then(function (response) {
                 return response.json();
             }).then(function (jsonResponse) {
-                if (jsonResponse.id) {
-                    userId = jsonResponse.id;
-                    return userId;
+                if (!jsonResponse.id) {
+                    return;
                 }
+
+                var playlistID = jsonResponse.id;
+
+                fetch('https://api.spotify.com/v1/users/' + userId + '/playlists/' + playlistID + '/tracks', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({ uris: trackURIs })
+                });
             });
-        }
+        });
     }
 };
 
