@@ -3,9 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-//you will register a Spotify application and create a method called getAccessToken in the Spotify module.
-// The method will get a user's access token so that they can make requests to the Spotify API.
-
 var accessToken = void 0;
 var client_id = '1061154da1164bbc9b258f51a6642468';
 var redirect_uri = 'http://localhost:3000/';
@@ -33,15 +30,15 @@ var Spotify = {
         }
     },
     search: function search(searchTerm) {
-        return Spotify.getAccessToken().then(function () {
-            return fetch('https://cors-anywhere.herokuapp.com/' + ('https://api.spotify.com/v1/search?type=track&q=' + searchTerm), {
-                headers: { Authorization: 'Bearer ' + accessToken }
-            });
+        // Spotify.getAccessToken();
+
+        return fetch('https://cors-anywhere.herokuapp.com/' + ('https://api.spotify.com/v1/search?type=track&q=' + searchTerm + '&limit=10'), {
+            headers: { Authorization: 'Bearer ' + accessToken }
         }).then(function (response) {
             return response.json();
         }).then(function (jsonResponse) {
             if (jsonResponse.tracks) {
-                return jsonResponse.tracks.map(function (track) {
+                return jsonResponse.tracks.items.map(function (track) {
                     return {
                         id: track.id,
                         name: track.name,

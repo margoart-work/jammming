@@ -1,6 +1,3 @@
-//you will register a Spotify application and create a method called getAccessToken in the Spotify module.
-// The method will get a user's access token so that they can make requests to the Spotify API.
-
 let accessToken;
 const client_id = '1061154da1164bbc9b258f51a6642468';
 const redirect_uri = 'http://localhost:3000/';
@@ -26,16 +23,16 @@ const Spotify = {
         }
     },
     search(searchTerm) {
-        return Spotify.getAccessToken().then(() => {
-                return fetch('https://cors-anywhere.herokuapp.com/' + `https://api.spotify.com/v1/search?type=track&q=${searchTerm}`, {
-                    headers: {Authorization: `Bearer ${accessToken}`}
-                });
+        // Spotify.getAccessToken();
+
+        return fetch('https://cors-anywhere.herokuapp.com/' + `https://api.spotify.com/v1/search?type=track&q=${searchTerm}&limit=10`, {
+                headers: {Authorization: `Bearer ${accessToken}`}
             }
         ).then(response => {
             return response.json();
         }).then(jsonResponse => {
             if (jsonResponse.tracks) {
-                return jsonResponse.tracks.map(track => ({
+                return jsonResponse.tracks.items.map(track => ({
                         id: track.id,
                         name: track.name,
                         artist: track.artists[0].name,
@@ -62,7 +59,7 @@ const Spotify = {
             return fetch('https://api.spotify.com/v1/me', {headers: headers}).then(response => {
                 return response.json();
             }).then(jsonResponse => {
-                if (jsonResponse.id){
+                if (jsonResponse.id) {
                     userId = jsonResponse.id;
                     return userId;
                 }
