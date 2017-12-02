@@ -11,17 +11,8 @@ class App extends React.Component {
         super(props);
         this.state = {
             searchResults: [],
-            playlistName: 'New Playlist',
-            playlistTracks: [
-                {
-                    name: 'Mercy',
-                    artist: 'Shawn Mendes',
-                    album: 'Illuminate'
-                }, {
-                    name: 'Jealous',
-                    artist: 'Nick Jonas',
-                    album: 'Nick Jonas X2'
-                }]
+            playlistName: 'ddddddd',
+            playlistTracks: []
         };
         this.addTrack = this.addTrack.bind(this);
         this.removeTrack = this.removeTrack.bind(this);
@@ -56,11 +47,11 @@ class App extends React.Component {
         });
     }
 
-    //Create a Method that Saves the Playlist to a User's Account
     savePlaylist() {
-        //Generates an array of uri values called trackURIs from the playlistTracks property.
-        let trackURIs = Array.from(this.state.playlistTracks.uri);
-        Spotify.savePlaylist();
+        let trackURIs = this.state.playlistTracks.map(track => {
+            return track.uri;
+        });
+        Spotify.savePlaylist(this.state.playlistName, trackURIs);
     }
 
 
