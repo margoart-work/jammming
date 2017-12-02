@@ -30,7 +30,9 @@ var Spotify = {
         }
     },
     search: function search(searchTerm) {
-        return fetch('https://cors-anywhere.herokuapp.com/' + ('https://api.spotify.com/v1/search?type=track&q=' + searchTerm), {
+        // Spotify.getAccessToken();
+
+        return fetch('https://cors-anywhere.herokuapp.com/' + ('https://api.spotify.com/v1/search?type=track&q=' + searchTerm + '&limit=10'), {
             headers: { Authorization: 'Bearer ' + accessToken }
         }).then(function (response) {
             return response.json();

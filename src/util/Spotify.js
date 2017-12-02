@@ -23,9 +23,11 @@ const Spotify = {
         }
     },
     search(searchTerm) {
-                return fetch('https://cors-anywhere.herokuapp.com/' + `https://api.spotify.com/v1/search?type=track&q=${searchTerm}`, {
-                    headers: {Authorization: `Bearer ${accessToken}`}
-                }
+        // Spotify.getAccessToken();
+
+        return fetch('https://cors-anywhere.herokuapp.com/' + `https://api.spotify.com/v1/search?type=track&q=${searchTerm}&limit=10`, {
+                headers: {Authorization: `Bearer ${accessToken}`}
+            }
         ).then(response => {
             return response.json();
         }).then(jsonResponse => {
@@ -57,7 +59,7 @@ const Spotify = {
             return fetch('https://api.spotify.com/v1/me', {headers: headers}).then(response => {
                 return response.json();
             }).then(jsonResponse => {
-                if (jsonResponse.id){
+                if (jsonResponse.id) {
                     userId = jsonResponse.id;
                     return userId;
                 }
