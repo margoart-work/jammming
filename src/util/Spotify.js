@@ -1,5 +1,5 @@
 let accessToken;
-const client_id = '1061154da1164bbc9b258f51a6642468';
+const client_id = 'Enter_your_clientid_here';
 const redirect_uri = 'http://localhost:3000/';
 
 //Create a Spotify Module
