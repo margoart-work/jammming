@@ -4,8 +4,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var accessToken = void 0;
-var client_id = 'enter_your_client_id';
-var redirect_uri = 'http://jammmingbymargo.surge.sh';
+var client_id = 'Enter_your_clientid_here';
+var redirect_uri = 'http://localhost:3000/';
 
 //Create a Spotify Module
 var Spotify = {
